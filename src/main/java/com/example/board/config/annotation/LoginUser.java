@@ -1,4 +1,4 @@
-package com.example.board.annotation;
+package com.example.board.config.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
