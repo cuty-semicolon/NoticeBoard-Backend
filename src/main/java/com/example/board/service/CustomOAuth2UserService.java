@@ -28,19 +28,34 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         OAuth2UserService<OAuth2UserRequest, OAuth2User> delegate = new DefaultOAuth2UserService();
         OAuth2User oAuth2User = delegate.loadUser(userRequest);
 
+        // 서비스 구분용 id (구글/네이버/등등)
         String registrationId = userRequest.getClientRegistration().getRegistrationId();
+
+        // 로그인시 pk가 되는 필드값
         String userNameAttributeName = userRequest.getClientRegistration().getProviderDetails().getUserInfoEndpoint().getUserNameAttributeName();
 
+        // 소셜 로그인 된 유저 정보를 객체화
         OAuthAttributes attributes = OAuthAttributes.of(registrationId, userNameAttributeName, oAuth2User.getAttributes());
 
+        // 사용자 정보 없데이트
         User user = saveOrUpdate(attributes);
+
+        /**
+         * 세션에 사용자 정보 등록
+         * 이를 위한 DTO가 SessionDto
+         */
         httpSession.setAttribute("user", new SessionUser(user));
 
         return new DefaultOAuth2User(Collections.singleton(new SimpleGrantedAuthority(user.getRoleKey())), attributes.getAttributes(), attributes.getNameAttributeKey());
     }
 
     private User saveOrUpdate(OAuthAttributes attributes){
-        User user = userRepository.findByEmail(attributes.getEmail()).map(entity -> entity.update(attributes.getName(),attributes.getPicture())).orElse(attributes.toEntity());
+        User user = userRepository.findByEmail(attributes.getEmail()).map(  // 해당 이메일의 사용자를 찾으면 이름과 사진 없데이트
+                entity -> entity.update(attributes.getName(),attributes.getPicture()))
+                // 해당 사용자가 없으먄 신규 생성
+                    .orElse(attributes.toEntity());
+
+        // DB에 저장 후 해당 값 변환
         return userRepository.save(user);
     }
 }

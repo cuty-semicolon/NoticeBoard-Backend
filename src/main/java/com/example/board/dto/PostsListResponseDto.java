@@ -6,7 +6,7 @@ import lombok.Getter;
 import java.time.LocalDateTime;
 
 @Getter
-public class PostsListResponseDto {
+public class PostsListResponseDto { // 포스트의 Entity를 이용하여 필요한 필드만 Dto 구성
     private Long id;
     private String title;
     private String author;

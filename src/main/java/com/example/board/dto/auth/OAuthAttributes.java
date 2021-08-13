@@ -25,12 +25,15 @@ public class OAuthAttributes {
         this.picture = picture;
     }
 
+    // OAuth로 전달 받은 밧을 재 규격화
+
     public static OAuthAttributes of(String registrationId, String userNameAttributeName, Map<String, Object> attributes){
         if("naver".equals(registrationId)){
             return ofNaver("id",attributes);
         }
         return ofGoogle(userNameAttributeName, attributes);
     }
+    // google, naver로 로그인 정보 재규격화
 
     private static OAuthAttributes ofGoogle(String userNameAttributeName, Map<String,Object> attributes){
         return OAuthAttributes.builder()
@@ -52,6 +55,7 @@ public class OAuthAttributes {
                 .nameAttributeKey(userNameAttributeName)
                 .build();
     }
+    // 신규 유저ㅡ이 경구
 
     public User toEntity() {
         return User.builder()
