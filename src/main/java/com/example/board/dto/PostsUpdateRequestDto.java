@@ -16,3 +16,8 @@ public class PostsUpdateRequestDto {
         this.content = content;
     }
 }
+
+/**
+ * //Posts에 추가
+ *
+ */

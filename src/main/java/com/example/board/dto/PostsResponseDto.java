@@ -17,3 +17,8 @@ public class PostsResponseDto {
         this.author = entity.getAuthor();
     }
 }
+
+/**
+ * PostsResponseDto는 Entity의 필드 중 일부만 사용 ~> 생성자로 Entity 받아 필드에 넣을 필요 X
+ *
+ */

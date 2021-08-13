@@ -17,7 +17,7 @@ import javax.persistence.*;
 @Entity                 //테이블과 링크될 클래스임을 나타냄
 public class Posts extends BaseTimeEntity {
     @Id                 //PK필드 명시
-    @GeneratedValue(strategy = GenerationType.IDENTITY)     //PK생성규칙
+    @GeneratedValue(strategy = GenerationType.IDENTITY)     //PK생성규칙  auto increment
     private Long id;
 
     @Column(length = 500, nullable = false)     //Column은 굳이 선언하지 않아도 모두 칼럼이지만, 이처럼 변경사항있을시 사용
@@ -28,7 +28,7 @@ public class Posts extends BaseTimeEntity {
 
     private String author;
 
-    @Builder
+    @Builder    // 빌더 패턴 클래스 생성, 생성자에 포함된 필드만 포함
     public Posts(String title, String content, String author){
         this.title = title;
         this.content = content;

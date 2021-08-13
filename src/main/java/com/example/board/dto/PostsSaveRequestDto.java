@@ -30,3 +30,12 @@ public class PostsSaveRequestDto {
                 .build();
     }
 }
+
+/**
+ * Entity와 거의 유사하지만, Dto 클래스를 추가로 생성한 이유
+ *
+ * Entity 클래스를 Request / Response 클래스로 사용해서는 안됨
+ * Entity 클래스는 Db와 맞닿아 있는 핵심 클래스이다
+ * 회면 병경은 사소하고 자주 일어나는데 Entity를 사용하면 너무큰 변경이 됨
+ * View Layer와 DB Layer의 역활을 분리 시켜야 함
+ **/
